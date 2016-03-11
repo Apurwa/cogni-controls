@@ -3,6 +3,10 @@
 require_once 'lib/limonade.php';
 require_once 'functions.php';
 
+function before(){
+  layout('default.php');
+}
+
 dispatch('/', 'login');
 function login(){
   return render('login.html.php');
