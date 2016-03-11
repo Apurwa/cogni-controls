@@ -8,12 +8,12 @@ function login(){
   return render('login.html.php');
 }
 
-dispatch_post('/', 'login');
-function login(){
+dispatch_post('/', 'login_post');
+function login_post(){
   $con = $_POST['control_num'];
   $pass = $_POST['password'];
 
-  header(Location: '/control-1')
+  header('Location: /control-1');
 }
 
 dispatch('/control-1', 'control1');
