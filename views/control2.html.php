@@ -19,7 +19,7 @@
 			<td></td>
 		</tr>
 	</table>
-	<div class="login-control"><span class="btn btn-success" id="summit">Submit</span></div>
+	<div class="login-control"><span class="btn btn-success" id="c2_summit">Submit</span></div>
 	<table class="table c1-details">
 		<tr>
 			<th>Cogni-ID</th>

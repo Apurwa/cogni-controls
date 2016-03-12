@@ -12,19 +12,17 @@
 			<th></th>
 		</tr>
 		<tr>
-			<td><input type="text" class="form-control" placeholder="cogni-id" id="cogni_id"></td>
-			<td><button class="btn btn-primary">Search</button></td>
-			<td><input type="checkbox" class="form-control" name="noc" value="1" id="noc"></td>
-			<td><input type="checkbox" class="form-control" name="college_id" value="1" id="college_id"></td>
-			<td><input type="text" class="form-control" placeholder="ticket-id" id="ticket_id"></td>
-			<td><input type="text" class="form-control" placeholder="ticket-type" id="type"></td>
-			<td><input type="text" class="form-control" placeholder="cost" id="cost"></td>
+			<td><input type="text" class="form-control" placeholder="cogni-id" id="cogni_id_1"></td>
+			<td><button class="btn btn-primary" id="search">Search</button></td>
+			<td><input type="checkbox" class="form-control" name="noc" value="1" id="noc_1"></td>
+			<td><input type="checkbox" class="form-control" name="college_id" value="1" id="college_id_1"></td>
+			<td><input type="text" class="form-control" placeholder="ticket-id" id="ticket_id_1"></td>
+			<td><input type="text" class="form-control" placeholder="ticket-type" id="type_1"></td>
+			<td><input type="text" class="form-control" placeholder="cost" id="cost_1"></td>
 			<td></td>
-			<form action="login" method="post">
-			</form>
 		</tr>
 	</table>
-	<div class="login-control"><span class="btn btn-success" id="submit">All OK</span></div>
+	<div class="login-control"><span class="btn btn-success" id="c1_submit">All OK</span></div>
 	<table class="table c1-details">
 		<tr>
 			<th>Cogni-ID</th>
