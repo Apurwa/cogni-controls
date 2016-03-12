@@ -2,8 +2,11 @@
 // limonade
 require_once 'lib/limonade.php';
 require_once 'functions.php';
+session_start();
 
 function before(){
+  global $control;
+  $control = 1;
   layout('default.php');
 }
 
@@ -16,14 +19,19 @@ dispatch_post('/', 'login_post');
 function login_post(){
   $con = $_POST['control_num'];
   $pass = $_POST['password'];
-
-  header('Location: /control-1');
+  $control = 1;
+  $_SESSION['control_num'] = $control;
+  redirect_to('/manage');
 }
 
-dispatch('/control-1', 'control1');
-function control1(){
-  global $control;
-  auth_control($control);
+dispatch('/manage', 'get_control');
+function get_control(){
+  $control_num = (isset($_SESSION['control_num']) ? $_SESSION['control_num'] : false );
+  if($control_num){
+    return render('control'.$control_num.'.html.php');
+  } else{
+    header('location: /');
+  }
 }
 
 //Route for all public assets

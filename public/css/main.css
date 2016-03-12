@@ -1,1 +1,6 @@
-.login-control{ text-align: center; padding: 10px;}
+.login-control{ text-align: center; padding: 10px; margin-bottom: 20px;}
+.login-head{ border-bottom: 1px solid gray; margin-bottom: 20px;}
+.login{ margin-top: 100px;}
+.jumbotron{ padding-top: 50px;}
+.control1{ margin-top: 50px;}
+input[type=checkbox], input[type=radio] { margin: 0;}
