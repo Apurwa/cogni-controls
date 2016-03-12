@@ -26,6 +26,18 @@ function control1(){
   auth_control($control);
 }
 
+//Route for all public assets
+dispatch('/public/**', 'public_pages');
+function public_pages(){
+  $filename = params(0);
+  return render_file(option('public_dir').'/'.$filename);
+};
+
+/*function configure(){
+  option('base_uri', '/cogni-controls');
+  # option('base_uri', '/my_app'); # '/' or same as the RewriteBase in your .htaccess
+}*/
+
 run();
 
 ?>
