@@ -2,7 +2,7 @@
 	<div class="login-control"><h2>Control-1: Payment and ID Verification</h2></div>
 	<table class="table payment-check">
 		<tr>
-			<th>Cogni-ID</th> <!-- Email is also allowed here, but its deprecated -->
+			<th>Cogni-ID</th> <!-- Email is also allowed here, but its deprecated. -->
 			<th></th>
 			<th>NOC</th>
 			<th>College ID</th>

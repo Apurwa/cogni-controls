@@ -19,7 +19,7 @@ dispatch_post('/', 'login_post');
 function login_post(){
   $con = $_POST['control_num'];
   $pass = $_POST['password'];
-  $control = 1;
+  $control = 2;
   $_SESSION['control_num'] = $control;
   redirect_to('/manage');
 }
