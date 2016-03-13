@@ -1,8 +1,9 @@
 <div class="col-sm-12 c1">
 	<div class="login-control"><h2>Control-1: Payment and ID Verification</h2></div>
-	<input type="text" class="form-control" placeholder="Cogni-ID" id="cogni_id_search">
+	<input type="text" class="form-control" placeholder="Cogni-ID" id="cogni_id_search" autofocus>
 	<button class="btn btn-primary" id="search">Search</button>
 	<div class="clear"></div>
+	<div class="c1-success alert alert-success">Succssfully checked-in participants: <span></span></div>
 	<div class="c1-tables">
 		<table class="table payments-check">
 			<tr>
