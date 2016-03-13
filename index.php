@@ -19,7 +19,7 @@ dispatch_post('/', 'login_post');
 function login_post(){
   $con = $_POST['control_num'];
   $pass = $_POST['password'];
-  $control = 2;
+  $control = 1;
   $_SESSION['control_num'] = $control;
   redirect_to('/manage');
 }
@@ -38,18 +38,17 @@ function get_control(){
 dispatch('/check-cogni-id', 'check_cogni_id');
 function check_cogni_id(){
   global $conn;
-  $cogni_id = trim( end(explode('/', $_GET['cogni_id'])) );
+  $cogni_ids = $_GET['cogni_ids'];
   // all tickets in which this cogni-id exits
-  $q = "select * from receipts where cogni_id = $cogni_id || email = $cogni_id";
+  $q = "select * from receipts where cogni_id in (".implode(',', $cogni_ids).") || email in (".implode(',', $cogni_ids).")";
   $result = $conn->query($q);
   if ($result->num_rows > 0){
     while ($row = $result->fetch_assoc()){
-      $data[] = $row;
       // now all the entries on same ticket
-      $q = "select * from receipts where ticket_id = ".$row['ticket_id'];
+      $q = "select * from receipts where ticket_id = '".$row['ticket_id']."'";
       $result2 = $conn->query($q);
       if ($result2->num_rows > 0){
-        while ($row2 = $results->fetch_assoc()){
+        while ($row2 = $result2->fetch_assoc()){
           $data[] = $row2;
         }
       }
@@ -59,14 +58,14 @@ function check_cogni_id(){
 }
 
 // on submitting the control-1
-dispatch_post('/verify', 'save_control1');
+dispatch_post('/c1-submit', 'save_control1');
 function save_control1(){
   
 }
 
 // on submitting the control-2
-dispatch_post('/allot', 'save_control2');
-function save_control1(){
+dispatch_post('/c2-submit', 'save_control2');
+function save_control2(){
   
 }
 
@@ -79,7 +78,7 @@ function public_pages(){
 
 function configure(){
   global $conn;
-  $conn = new mysqli('localhost', 'root', '', 'cogni-controls');
+  $conn = new mysqli('127.0.0.1', 'root', 'root', 'cogni-controls');
   if ($conn->connect_error)
     die('Connection failed: '.$conn->connect_error);
 }
