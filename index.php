@@ -38,9 +38,9 @@ function get_control(){
 dispatch('/check-cogni-id', 'check_cogni_id');
 function check_cogni_id(){
   global $conn;
-  $cogni_ids = $_GET['cogni_ids'];
+  $cogni_id = $_GET['cogni_id'];
   // all tickets in which this cogni-id exits
-  $q = "select * from receipts where cogni_id in (".implode(',', $cogni_ids).") || email in (".implode(',', $cogni_ids).")";
+  $q = "select * from receipts where cogni_id = '$cogni_id' or email like '$cogni_id%'";
   $result = $conn->query($q);
   if ($result->num_rows > 0){
     while ($row = $result->fetch_assoc()){
