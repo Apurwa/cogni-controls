@@ -60,7 +60,19 @@ function check_cogni_id(){
 // on submitting the control-1
 dispatch_post('/c1-submit', 'save_control1');
 function save_control1(){
-  
+  global $conn, $check_ins_cols; $c1_values = '';
+  $c1_data = json_decode($_POST['c1_data'], true);
+  foreach ($c1_data as $key => $value) {
+    $c1_values .= "('', '".$c1_data[$key]['cogni_id']."', '".$c1_data[$key]['ticket_id']."', '".$c1_data[$key]['noc']."', '".$c1_data[$key]['college_id']."','','','','','".date('Y-m-d h:i:sa')."','')";
+    if ($key+1 < sizeof($c1_data))
+      $c1_values .= ', ';
+  }
+  $q = "insert into check_ins ($check_ins_cols) values $c1_values";
+  //echo $q;
+  if ($conn->query($q))
+    return 'success';
+  else
+    return 'Error: '.$conn->error;
 }
 
 // on submitting the control-2
@@ -81,6 +93,9 @@ function configure(){
   $conn = new mysqli('127.0.0.1', 'root', 'root', 'cogni-controls');
   if ($conn->connect_error)
     die('Connection failed: '.$conn->connect_error);
+
+  global $check_ins_cols;
+  $check_ins_cols = "id, cogni_id, ticket_id, noc, college_id, kit_issued, id_issued, bhawan, room_no, control1_at, control2_at";
 }
 
 run();

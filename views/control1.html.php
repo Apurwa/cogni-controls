@@ -2,8 +2,8 @@
 	<div class="login-control"><h2>Control-1: Payment and ID Verification</h2></div>
 	<input type="text" class="form-control" placeholder="Cogni-ID" id="cogni_id_search" autofocus>
 	<button class="btn btn-primary" id="search">Search</button>
-	<div class="clear"></div>
-	<div class="c1-success alert alert-success">Succssfully checked-in participants: <span></span></div>
+	<div class="clear"></div><br />
+	<div class="c1-success alert alert-success">Succssfully checked-in <span></span> participants.</div>
 	<div class="c1-tables">
 		<table class="table payments-check">
 			<tr>
@@ -23,7 +23,8 @@
 				<th>Cost</th>
 			</tr>
 		</table>
-		<div class="login-control loading" id="info"><img src="/public/images/loading.gif"></div>
+		<img src="/public/images/loading.gif" class="login-control loading">
+		<div class="login-control" id="info"></div>
 		<div class="login-control"><span class="btn btn-success" id="c1_submit">Check-In Verified Participants</span></div>
 	</div>
 </div>
