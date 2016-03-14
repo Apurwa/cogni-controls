@@ -4,11 +4,6 @@ require_once 'lib/limonade.php';
 require_once 'functions.php';
 session_start();
 
-function before(){
-  global $control;
-  $control = 1;
-  layout('default.php');
-}
 
 dispatch('/', 'login');
 function login(){
@@ -19,16 +14,22 @@ dispatch_post('/', 'login_post');
 function login_post(){
   $con = $_POST['control_num'];
   $pass = $_POST['password'];
-  $control = 1;
+  $control = 2;
   $_SESSION['control_num'] = $control;
   redirect_to('/manage');
 }
 
 dispatch('/manage', 'get_control');
 function get_control(){
+  global $conn;
   $control_num = (isset($_SESSION['control_num']) ? $_SESSION['control_num'] : false );
-  if($control_num){
-    return render('control'.$control_num.'.html.php');
+  if ($control_num){
+    $after_c1 = [];
+    if ($control_num == 2){
+      $q = "select * from check_ins where kit_issued = false || id_issued = false";
+      $after_c1 = select_q($q);
+    }
+    return render('control'.$control_num.'.html.php', 'default.php', array('c2'=>$after_c1));
   } else{
     redirect_to('/');
   }
@@ -63,7 +64,7 @@ function save_control1(){
   global $conn, $check_ins_cols; $c1_values = '';
   $c1_data = json_decode($_POST['c1_data'], true);
   foreach ($c1_data as $key => $value) {
-    $c1_values .= "('', '".$c1_data[$key]['cogni_id']."', '".$c1_data[$key]['ticket_id']."', '".$c1_data[$key]['noc']."', '".$c1_data[$key]['college_id']."','','','','','".date('Y-m-d h:i:sa')."','')";
+    $c1_values .= "('', '".$c1_data[$key]['receipt_id']."', '".$c1_data[$key]['cogni_id']."', '".$c1_data[$key]['ticket_id']."', '".$c1_data[$key]['noc']."', '".$c1_data[$key]['college_id']."', '".$c1_data[$key]['is_acco']."','','','','','".date('Y-m-d h:i:sa')."','')";
     if ($key+1 < sizeof($c1_data))
       $c1_values .= ', ';
   }
@@ -78,7 +79,15 @@ function save_control1(){
 // on submitting the control-2
 dispatch_post('/c2-submit', 'save_control2');
 function save_control2(){
-  
+  global $conn, $check_ins_cols;
+  $c2_values = "kit_issued = ".$_POST['kit_issued'].", id_issued = ".$_POST['id_issued'].",
+               bhawan = '".$_POST['bhawan']."', room_no = '".$_POST['room']."', control2_at = '".date('Y-m-d h:i:sa')."'";
+  $q = "update check_ins set $c2_values where receipt_id = '".$_POST['receipt_id']."'";
+  //echo $q;
+  if ($conn->query($q))
+    return 'success';
+  else
+    return 'Error: '.$conn->error;
 }
 
 //Route for all public assets
@@ -88,6 +97,12 @@ function public_pages(){
   return render_file(option('public_dir').'/'.$filename);
 };
 
+function before(){
+  global $control;
+  $control = 1;
+  layout('default.php');
+}
+
 function configure(){
   global $conn;
   $conn = new mysqli('127.0.0.1', 'root', 'root', 'cogni-controls');
@@ -95,7 +110,7 @@ function configure(){
     die('Connection failed: '.$conn->connect_error);
 
   global $check_ins_cols;
-  $check_ins_cols = "id, cogni_id, ticket_id, noc, college_id, kit_issued, id_issued, bhawan, room_no, control1_at, control2_at";
+  $check_ins_cols = "id, receipt_id, cogni_id, ticket_id, noc, college_id, is_acco, kit_issued, id_issued, bhawan, room_no, control1_at, control2_at";
 }
 
 run();

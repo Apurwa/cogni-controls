@@ -1,9 +1,10 @@
+<script type="text/javascript" src="public/js/control1.js"></script>
 <div class="col-sm-12 c1">
 	<div class="login-control"><h2>Control-1: Payment and ID Verification</h2></div>
 	<input type="text" class="form-control" placeholder="Cogni-ID" id="cogni_id_search" autofocus>
 	<button class="btn btn-primary" id="search">Search</button>
 	<div class="clear"></div><br />
-	<div class="c1-success alert alert-success">Succssfully checked-in <span></span> participants.</div>
+	<div class="c1-success alert alert-success">Succssfully checked-in <span></span> participant(s).</div>
 	<div class="c1-tables">
 		<table class="table payments-check">
 			<tr>
@@ -23,8 +24,8 @@
 				<th>Cost</th>
 			</tr>
 		</table>
-		<img src="/public/images/loading.gif" class="login-control loading">
-		<div class="login-control" id="info"></div>
-		<div class="login-control"><span class="btn btn-success" id="c1_submit">Check-In Verified Participants</span></div>
 	</div>
+	<img src="/public/images/loading.gif" class="login-control loading" />
+	<div class="login-control" id="info"></div>
+	<div class="login-control"><span class="btn btn-success" id="c1_submit">Check-In Verified Participants</span></div>
 </div>

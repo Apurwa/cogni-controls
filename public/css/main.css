@@ -8,3 +8,4 @@ input[type=checkbox], input[type=radio] { margin: 0;}
 .clear{ clear: both;}
 .payments-check{ margin-top: 20px;}
 .loading, .c1-tables, .c1-success, #c1_submit{ display: none;}
+.mdm-font{ font-size: 20px;}
