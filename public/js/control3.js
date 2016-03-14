@@ -3,18 +3,19 @@ $(document).ready(function(){
 		$(".loading").show();
 		var id = $(this).attr('id');
 		var data = {
-			kit_issued: $('#kit_'+id).is(':checked'),
-			id_issued: $('#id_'+id).is(':checked'),
+			caution: $('#caution_'+id).is(':checked'),
+			bhawan: $('#bhawan_'+id).val(),
+			room_no: $('#room_'+id).val(),
 			receipt_id: id
 		};
 
-		//console.log(data);
+		console.log(data);
 
-		$.post('/c2-submit', data, function(response, status){
+		$.post('/c3-submit', data, function(response, status){
 			$(".loading").hide();
 			if (status == 'success'){
 				if (response == 'success'){
-					if (data.kit_issued || data.id_issued){
+					if (data.caution){
 						$('#row_'+id).fadeOut();
 					}
 				} else

@@ -19,10 +19,12 @@
 		<table class="table c1-details">
 			<tr>
 				<th>Cogni-ID</th>
+				<th>Contact</th>
 				<th>Ticket-ID</th>
 				<th>Ticket-Type</th>
 				<th>Cost</th>
 			</tr>
+			<!-- further rows will be added by ajax defined in control1.js bases on the connections of cogni-id searched -->
 		</table>
 	</div>
 	<img src="/public/images/loading.gif" class="login-control loading" />

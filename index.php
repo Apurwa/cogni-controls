@@ -10,11 +10,11 @@ function login(){
   return render('login.html.php');
 }
 
-dispatch_post('/', 'login_post');
+dispatch_post('/login', 'login_post');
 function login_post(){
-  $con = $_POST['control_num'];
   $pass = $_POST['password'];
-  $control = 2;
+  $control = $_POST['control_num'];
+  //$control = 3;
   $_SESSION['control_num'] = $control;
   redirect_to('/manage');
 }
@@ -23,13 +23,19 @@ dispatch('/manage', 'get_control');
 function get_control(){
   global $conn;
   $control_num = (isset($_SESSION['control_num']) ? $_SESSION['control_num'] : false );
-  if ($control_num){
-    $after_c1 = [];
+  if ($control_num){ // if control number is not defined then redirect to login page.
+    $after_cn = [];
+    $q = "select check_ins.*, receipts.name, receipts.college from check_ins inner join receipts on check_ins.receipt_id=receipts.id ";
+    
     if ($control_num == 2){
-      $q = "select * from check_ins where kit_issued = false || id_issued = false";
-      $after_c1 = select_q($q);
+      $q2 = $q."where kit_issued = false || id_issued = false";
+      $after_cn = select_q($q2);
+    } elseif ($control_num == 3) {
+      $q3 = $q."where kit_issued = true && id_issued = true && (bhawan = '' || room_no = '' || caution = false)"; // these column should be null by default but its not working :(. Any ideas?
+      $after_cn = select_q($q3);
     }
-    return render('control'.$control_num.'.html.php', 'default.php', array('c2'=>$after_c1));
+    return render('control'.$control_num.'.html.php', 'default.php', array('cn'=>$after_cn));
+  
   } else{
     redirect_to('/');
   }
@@ -61,33 +67,36 @@ function check_cogni_id(){
 // on submitting the control-1
 dispatch_post('/c1-submit', 'save_control1');
 function save_control1(){
-  global $conn, $check_ins_cols; $c1_values = '';
-  $c1_data = json_decode($_POST['c1_data'], true);
+  global $conn; $c1_values = '';
+  $c1_data = json_decode($_POST['c1_data'], true);  
+  
   foreach ($c1_data as $key => $value) {
     $c1_values .= "('', '".$c1_data[$key]['receipt_id']."', '".$c1_data[$key]['cogni_id']."', '".$c1_data[$key]['ticket_id']."', '".$c1_data[$key]['noc']."', '".$c1_data[$key]['college_id']."', '".$c1_data[$key]['is_acco']."','','','','','".date('Y-m-d h:i:sa')."','')";
     if ($key+1 < sizeof($c1_data))
       $c1_values .= ', ';
   }
+  $check_ins_cols = "id, receipt_id, cogni_id, ticket_id, noc, college_id, is_acco, kit_issued, id_issued, bhawan, room_no, control1_at, control2_at";
   $q = "insert into check_ins ($check_ins_cols) values $c1_values";
   //echo $q;
-  if ($conn->query($q))
-    return 'success';
-  else
-    return 'Error: '.$conn->error;
+  return insert_q($q);  
 }
 
 // on submitting the control-2
 dispatch_post('/c2-submit', 'save_control2');
 function save_control2(){
-  global $conn, $check_ins_cols;
-  $c2_values = "kit_issued = ".$_POST['kit_issued'].", id_issued = ".$_POST['id_issued'].",
-               bhawan = '".$_POST['bhawan']."', room_no = '".$_POST['room']."', control2_at = '".date('Y-m-d h:i:sa')."'";
+  $c2_values = "kit_issued = ".$_POST['kit_issued'].", id_issued = ".$_POST['id_issued'].", control2_at = '".date('Y-m-d h:i:sa')."'";
   $q = "update check_ins set $c2_values where receipt_id = '".$_POST['receipt_id']."'";
   //echo $q;
-  if ($conn->query($q))
-    return 'success';
-  else
-    return 'Error: '.$conn->error;
+  return insert_q($q);
+}
+
+// on submitting the control-3
+dispatch_post('/c3-submit', 'save_control3');
+function save_control3(){
+  $c3_values = "caution = ".$_POST['caution'].", bhawan = '".$_POST['bhawan']."', room_no = '".$_POST['room_no']."'";
+  $q = "update check_ins set $c3_values where receipt_id = '".$_POST['receipt_id']."'";
+  //echo $q;
+  return insert_q($q);
 }
 
 //Route for all public assets
@@ -98,8 +107,6 @@ function public_pages(){
 };
 
 function before(){
-  global $control;
-  $control = 1;
   layout('default.php');
 }
 
@@ -108,9 +115,6 @@ function configure(){
   $conn = new mysqli('127.0.0.1', 'root', 'root', 'cogni-controls');
   if ($conn->connect_error)
     die('Connection failed: '.$conn->connect_error);
-
-  global $check_ins_cols;
-  $check_ins_cols = "id, receipt_id, cogni_id, ticket_id, noc, college_id, is_acco, kit_issued, id_issued, bhawan, room_no, control1_at, control2_at";
 }
 
 run();

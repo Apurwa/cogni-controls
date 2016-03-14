@@ -18,4 +18,13 @@
 		//$output = json_encode($output);
 		return $output;
 	}
+
+	// this can be used to insert or update
+	function insert_q($q){
+		global $conn;
+		if ($conn->query($q))
+	    return 'success';
+	  else
+	    return 'Error: '.$conn->error;
+	}
 ?>
