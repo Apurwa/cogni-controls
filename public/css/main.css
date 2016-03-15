@@ -7,5 +7,8 @@ input[type=checkbox], input[type=radio] { margin: 0;}
 #cogni_id_search{ width: 150px; margin-right: 10px; float: left;}
 .clear{ clear: both;}
 .payments-check{ margin-top: 20px;}
-.loading, .c1-tables, .c1-success, #c1_submit{ display: none;}
+.loading, .c1-tables, .c1-success, #c1_submit, .hidden{ display: none;}
 .mdm-font{ font-size: 20px;}
+.c3-allots{ width: 50%; float: left;}
+.allotments{ margin-top: 20px;}
+.text-center{ text-align: center;}

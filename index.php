@@ -24,17 +24,19 @@ function get_control(){
   global $conn;
   $control_num = (isset($_SESSION['control_num']) ? $_SESSION['control_num'] : false );
   if ($control_num){ // if control number is not defined then redirect to login page.
-    $after_cn = [];
+    $after_cn = []; $acco = [];
     $q = "select check_ins.*, receipts.name, receipts.college from check_ins inner join receipts on check_ins.receipt_id=receipts.id ";
     
     if ($control_num == 2){
       $q2 = $q."where kit_issued = false || id_issued = false";
-      $after_cn = select_q($q2);
+      $after_cn = select_q($q2);      
     } elseif ($control_num == 3) {
       $q3 = $q."where kit_issued = true && id_issued = true && (bhawan = '' || room_no = '' || caution = false)"; // these column should be null by default but its not working :(. Any ideas?
       $after_cn = select_q($q3);
+      $q_acco = "select * from accomodation";
+      $acco = select_q($q_acco);
     }
-    return render('control'.$control_num.'.html.php', 'default.php', array('cn'=>$after_cn));
+    return render('control'.$control_num.'.html.php', 'default.php', array('cn'=>$after_cn, 'acco'=>$acco));
   
   } else{
     redirect_to('/');
@@ -67,18 +69,28 @@ function check_cogni_id(){
 // on submitting the control-1
 dispatch_post('/c1-submit', 'save_control1');
 function save_control1(){
-  global $conn; $c1_values = '';
-  $c1_data = json_decode($_POST['c1_data'], true);  
+  global $conn; $c1_values = '', $c1_ws_values = '';
+  $c1_data = json_decode($_POST['c1_data'], true);
   
   foreach ($c1_data as $key => $value) {
-    $c1_values .= "('', '".$c1_data[$key]['receipt_id']."', '".$c1_data[$key]['cogni_id']."', '".$c1_data[$key]['ticket_id']."', '".$c1_data[$key]['noc']."', '".$c1_data[$key]['college_id']."', '".$c1_data[$key]['is_acco']."','','','','','".date('Y-m-d h:i:sa')."','')";
+    if (!$value[$key]['is_workshop'])
+      $c1_values .= "('', '".$c1_data[$key]['receipt_id']."', '".$c1_data[$key]['cogni_id']."', '".$c1_data[$key]['ticket_id']."', '".$c1_data[$key]['noc']."', '".$c1_data[$key]['college_id']."', '".$c1_data[$key]['is_acco']."','','','','','".date('Y-m-d h:i:sa')."','')";
+    else
+      $c1_ws_values .= "('".$c1_data[$key]['receipt_id']."', '".$c1_data[$key]['cogni_id']."', '".$c1_data[$key]['ticket_id']."', '".$c1_data[$key]['ws_name']."', '".date('Y-m-d h:i:sa')."')"
+    
     if ($key+1 < sizeof($c1_data))
       $c1_values .= ', ';
   }
+  
   $check_ins_cols = "id, receipt_id, cogni_id, ticket_id, noc, college_id, is_acco, kit_issued, id_issued, bhawan, room_no, control1_at, control2_at";
-  $q = "insert into check_ins ($check_ins_cols) values $c1_values";
+  $q1 = "insert into check_ins ($check_ins_cols) values $c1_values";
+  $q2 = "insert into ws_participants (receipt_id, cogni_id, ticket_id, ws_name, control1_at), values $c1_ws_values"
   //echo $q;
-  return insert_q($q);  
+  $status1 = insert_q($q1);
+  if ($status1 == 'success')
+    return insert_q($q1);
+  else
+    return $status1;
 }
 
 // on submitting the control-2
@@ -93,10 +105,21 @@ function save_control2(){
 // on submitting the control-3
 dispatch_post('/c3-submit', 'save_control3');
 function save_control3(){
-  $c3_values = "caution = ".$_POST['caution'].", bhawan = '".$_POST['bhawan']."', room_no = '".$_POST['room_no']."'";
-  $q = "update check_ins set $c3_values where receipt_id = '".$_POST['receipt_id']."'";
+  $bhawan = $_POST['bhawan'];
+  $room_no = $_POST['room_no'];
+  $caution = $_POST['caution'];
+  $receipt_id = $_POST['receipt_id'];
+  $available = $_POST['available'] - 1;  
+  $c3_values = "caution = ".$caution.", bhawan = '".$bhawan."', room_no = '".$room_no."'";
+  
+  $q1 = "update check_ins set $c3_values where receipt_id = '".$receipt_id."'";  
+  $q2 = "update accomodation set available = $available where bhawan = '$bhawan' && room_no = '$room_no'";
+  $status = insert_q($q2);
   //echo $q;
-  return insert_q($q);
+  if ($status == 'success')
+    return insert_q($q1);
+  else
+    return $status;
 }
 
 //Route for all public assets

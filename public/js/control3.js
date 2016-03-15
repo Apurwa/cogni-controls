@@ -1,11 +1,14 @@
+// this could have been merged with control2.js, but in future it might get dirtier on adding further features.
+
 $(document).ready(function(){
 	$('.allot').click(function(){
 		$(".loading").show();
 		var id = $(this).attr('id');
 		var data = {
+			bhawan: $('#bhawan').val(),
+			room_no: $('#room_no').val(),
+			available: $('#available').val(),
 			caution: $('#caution_'+id).is(':checked'),
-			bhawan: $('#bhawan_'+id).val(),
-			room_no: $('#room_'+id).val(),
 			receipt_id: id
 		};
 
@@ -15,6 +18,7 @@ $(document).ready(function(){
 			$(".loading").hide();
 			if (status == 'success'){
 				if (response == 'success'){
+					$('#info').html('<div class="alert alert-success"> Room allotted: '+data.room_no+' ('+data.bhawan+')</div>');				
 					if (data.caution){
 						$('#row_'+id).fadeOut();
 					}

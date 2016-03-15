@@ -44,15 +44,17 @@ $(document).ready(function(){
 		
 		var c1_data = [];
 		for (var i = 0; i < arr.length; i++) {
-			var noc = true, college_id = true, is_acco = false;
+			var noc = true, college_id = true, is_acco = true, is_workshop = false;
 			if ( !$('#noc_'+(i+1)).is(':checked') )
 				noc = false;
 			if ( !$('#college_id_'+(i+1)).is(':checked') )
-				college_id = false;
+				college_id = false;			
+			if (arr[i].cost != 2000 && arr[i].cost != 2060) // check if ticket is accomodation type
+				is_acco = false;			
+			if (arr[i].event_name == 'Cognizance 2016 Workshop') // check if this entry is of workshop, the string is taken from receipt table
+				is_workshop = true;
 			
-			if (arr[i].cost == 2000 || arr[i].cost == 2060) // check if ticket is accomodation type
-				is_acco = true;
-			c1_data.push({receipt_id: arr[i].id, cogni_id: arr[i].cogni_id, ticket_id: arr[i].ticket_id, noc: noc, college_id: college_id, is_acco: is_acco});
+			c1_data.push({receipt_id: arr[i].id, cogni_id: arr[i].cogni_id, ticket_id: arr[i].ticket_id, noc: noc, college_id: college_id, is_acco: is_acco, is_workshop: is_workshop});
 		};
 		
 		c1_data_json = JSON.stringify(c1_data);
