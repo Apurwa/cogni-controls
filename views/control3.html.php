@@ -4,7 +4,7 @@
 	<div class="login-control"><h2>Control-3: Accomodation</h2></div>
 	<div class="login-control">
 		<span class="mdm-font">Pending participants: <span class="label label-warning"><?= sizeof($cn) ?></span>&nbsp;
-		</span><span class="btn btn-success">Refresh</span><img src="/public/images/loading.gif" class="loading" />
+		</span><span class="btn btn-success refresh">Refresh</span><img src="/public/images/loading.gif" class="loading" />
 	</div>
 	<div class="col-sm-offset-3 col-sm-6">
 		<table class="table table-striped">
@@ -23,9 +23,9 @@
 				</td>
 				<td>
 					<select name="room_no" id="room_no"	 class="form-control">
-						<option value="" class="">-- select room number --</option>
+						<option value="" class="default_room_no">-- select room number --</option>
 						<?php foreach ($acco as $i => $v) { ?>
-							<option value="<?= $v['room_no'] ?>" class="<?= $v['bhawan'] ?>"><?= $v['room_no'] ?> (<?= $v['available'] ?>)</option>
+							<option value="<?= $v['room_no'] ?>" class="<?= $v['bhawan'] ?> room_no"><?= $v['room_no'] ?>, (<?= $v['available'] ?>), <?= $v['bhawan'] ?></option>
 						<?php } ?>
 					</select>
 				</td>
@@ -56,10 +56,10 @@
 					<td><input type="checkbox" class="form-control" name="caution_<?= $value['receipt_id'] ?>" value="1" id="caution_<?= $value['receipt_id'] ?>" <?php if ($value['caution']) echo 'checked'; ?>></td>
 					<td><?= $value['name'] ?></td>
 					<td><?= $value['college'] ?></td>
-					<td><span class="btn btn-success allot" id="<?= $value['receipt_id'] ?>">Confirm</span></td>
+					<td><span class="btn btn-success allot" id="<?= $value['receipt_id'] ?>">Allot</span></td>
 				</tr>
 			<?php } ?>
 		</table>
-	<div class="login-control" id="info"></div>
 	<?php } ?>
+	<div class="login-control" id="info"></div>
 </div>

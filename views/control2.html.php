@@ -1,10 +1,10 @@
 <?php //$cn = json_decode($cn, true); ?>
-<script type="text/javascript" src="public/js/control2.js"></script>
+<script type="text/javascript" src="public/js/control2.js?v=1"></script>
 <div class="col-sm-12 cn">
 	<div class="login-control"><h2>Control-2: Allotments (Kit, ID)</h2></div>
 	<div class="login-control">
 		<span class="mdm-font">Pending allotments: <span class="label label-warning"><?= sizeof($cn) ?></span>
-		</span><span class="btn btn-success">Refresh</span><img src="/public/images/loading.gif" class="loading" />
+		</span><span class="btn btn-success refresh">Refresh</span><img src="/public/images/loading.gif" class="loading" />
 	</div>
 	<div class="login-control" id="info"></div>
 	<table class="table table-striped allotments">

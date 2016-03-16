@@ -9,16 +9,16 @@
 	<link rel="shortcut icon" href="/public/images/favicon.ico" />
 </head>
 <body>
-<div id="header">
-	
+<div id="header" class="col-sm-12">
+	<h3 class="col-sm-6">Controls, Cognizance IIT Roorkee</h3>
+	<?php if (isset($_SESSION['control_num'])){ ?>
+	<h4 class="col-sm-offset-5 col-sm-1"><a href="/logout">Logout</a></h4>
+	<?php } ?>
 </div>
 
 <div id="page" class="container">
 	<?php echo $content; ?>
 </div>
 
-<div id="footer">
-	
-</div>
 </body>
 </html>

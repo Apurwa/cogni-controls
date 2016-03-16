@@ -22,6 +22,10 @@ $(document).ready(function(){
 			} else
 					$('#info').append('<br /><div class="alert alert-danger">Error in submitting the data.</div>');
 		});
-
 	});
+
+	$('.refresh').click(function(){
+		location.reload();
+	});
+	
 });

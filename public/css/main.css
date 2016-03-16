@@ -7,8 +7,13 @@ input[type=checkbox], input[type=radio] { margin: 0;}
 #cogni_id_search{ width: 150px; margin-right: 10px; float: left;}
 .clear{ clear: both;}
 .payments-check{ margin-top: 20px;}
-.loading, .c1-tables, .c1-success, #c1_submit, .hidden{ display: none;}
+.loading, .c1-tables, .c1-success, #c1_submit, .room_no{ display: none;}
 .mdm-font{ font-size: 20px;}
 .c3-allots{ width: 50%; float: left;}
 .allotments{ margin-top: 20px;}
 .text-center{ text-align: center;}
+#header{ height: 50px; background-color: #343434; color: white;}
+#header a{ color: white;}
+#header h3{margin-top: 10px;}
+#header h4{margin-top: 13px;}
+#footer{ position: absolute; bottom: 0px; background-color: #343434; color: white; height: 40px; text-align: center;}

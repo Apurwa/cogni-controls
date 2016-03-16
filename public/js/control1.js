@@ -90,7 +90,7 @@ function show_data(data, cogni_id){
   	arr = JSON.parse(data);
 		for (var i = 0; i < arr.length; i++) {
 			$('.payments-check').append('<tr><td>'+arr[i].cogni_id+'</td><td><input type="checkbox" class="form-control" name="noc" value="1" id="noc_'+(i+1)+'"></td><td>'+arr[i].name+'</td><td>'+arr[i].college+'</td><td><input type="text" name="events" value="'+arr[i].events+'" class="form-control"></td><td><input type="checkbox" class="form-control" name="college_id" value="1" id="college_id_'+(i+1)+'"></td></tr>');
-			$('.c1-details').append('<tr><td>'+arr[i].cogni_id+'</td><td>'+arr[i].ticket_id+'</td><td>'+arr[i].type+'</td><td>'+arr[i].cost+'</td></tr>');
+			$('.c1-details').append('<tr><td>'+arr[i].cogni_id+'</td><td>'+arr[i].mobile+'</td><td>'+arr[i].ticket_id+'</td><td>'+arr[i].type+'</td><td>'+arr[i].cost+'</td></tr>');
 			amount += parseInt(arr[i].cost);
 		}
 		if (amount != 0)
