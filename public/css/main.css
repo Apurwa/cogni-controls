@@ -15,7 +15,7 @@ input[type=checkbox], input[type=radio] { margin: 0;}
 #header{ height: 50px; background-color: #343434; color: white;}
 #header a{ color: white;}
 #header h3{margin-top: 10px;}
-#header h4{margin-top: 13px;}
+#header h5{margin-top: 16px;}
 #footer{ position: fixed; bottom: 0px; background-color: #343434; color: white; height: 30px; 
 	text-align: center; padding-top: 5px;}
 #page{ margin-bottom: 30px;}
