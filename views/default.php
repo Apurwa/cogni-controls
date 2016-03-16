@@ -10,8 +10,13 @@
 </head>
 <body>
 <div id="header" class="col-sm-12">
-	<h3 class="col-sm-6">Controls, Cognizance IIT Roorkee</h3>
-	<?php if (isset($_SESSION['control_num'])){ ?>
+	<h3 class="col-sm-6"><a href="/">Controls, Cognizance IIT Roorkee</a></h3>
+	<?php if ( isset($_SESSION['admin']) && $_SESSION['admin'] ){ ?>
+		<h4 class="col-sm-offset-2 col-sm-1"><a href="/manage?control_num=1">Control-1</a></h4>
+		<h4 class="col-sm-1"><a href="/manage?control_num=2">Control-2</a></h4>
+		<h4 class="col-sm-1"><a href="/manage?control_num=3">Control-3</a></h4>
+		<h4 class="	col-sm-1"><a href="/logout">Logout</a></h4>
+	<?php } elseif (isset($_SESSION['control_num'])){ ?>
 		<h4 class="col-sm-offset-5 col-sm-1"><a href="/logout">Logout</a></h4>
 	<?php } ?>
 </div>
@@ -21,7 +26,7 @@
 </div>
 
 <div id="footer" class="col-sm-12">
-	<span>source</span>
+	<span><a href="https://github.com/Apurwa/cogni-controls" target="_blank">source</a></span>
 </div>
 </body>
 </html>

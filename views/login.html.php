@@ -17,7 +17,7 @@
 			  <input type="radio" class="form-control" name="control_num" value="3" id="control3">
 			</div>
 			<div class="input-group col-sm-12">
-			  <input type="password" class="form-control" placeholder="password">
+			  <input type="password" class="form-control" placeholder="password" name="password">
 			</div>
 			<br />
 			<div class="input-group col-sm-12">

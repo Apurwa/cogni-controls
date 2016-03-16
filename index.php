@@ -17,8 +17,16 @@ dispatch_post('/login', 'login_post');
 function login_post(){
   $pass = $_POST['password'];
   $control = $_POST['control_num'];
+  $q = "select control from users where password = '$pass'";
+  $user = select_q($q);
+  //var_dump($user[0]);
+  if ($user[0]['control'] == 'admin'){
+    $_SESSION['admin'] = true;
+    $_SESSION['control_num'] = $control;
+  } elseif ($user[0]['control'] == 'general'){
+    $_SESSION['control_num'] = $control;    
+  }
   //$control = 3;
-  $_SESSION['control_num'] = $control;
   redirect_to('/manage');
 }
 
@@ -26,6 +34,11 @@ dispatch('/manage', 'get_control');
 function get_control(){
   global $conn;
   $control_num = (isset($_SESSION['control_num']) ? $_SESSION['control_num'] : false );
+  // admin can go to any page
+  if ( isset($_SESSION['admin']) && $_SESSION['admin'] && isset($_GET['control_num'])){
+    $control_num = $_GET['control_num'];
+  }
+
   if ($control_num){ // if control number is not defined then redirect to login page.
     $after_cn = []; $acco = [];
     $q = "select check_ins.*, receipts.name, receipts.college from check_ins inner join receipts on check_ins.receipt_id=receipts.id ";
@@ -128,6 +141,8 @@ function save_control3(){
 dispatch('/logout', 'logout');
 function logout(){
   unset($_SESSION['control_num']);
+  if (isset($_SESSION['admin']))
+    unset($_SESSION['admin']);
   redirect_to('/');
 }
 
