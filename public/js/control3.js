@@ -24,9 +24,13 @@ $(document).ready(function(){
 				$(".loading").hide();
 				if (status == 'success'){
 					if (response == 'success'){
+						var room_no_text = $('#room_no option:selected').text().split('#');
+						var availability = room_no_text[1] - 1; // the text value of the option shows the availability of beds after '#'
+						//console.log(room_no_text[0]+'#'+availability);
+						$('#room_no option:selected').text(room_no_text[0]+'#'+availability);
 						$('#info').html('<div class="alert alert-success"> Room allotted: '+data.room_no+' ('+data.bhawan+')</div>');				
 						$('.default_room_no').prop('selected', true);
-							$('#row_'+id).fadeOut();
+						$('#row_'+id).fadeOut();
 					} else
 						$('#info').append('<br /><div class="alert alert-danger">'+response+'</div>');
 				} else

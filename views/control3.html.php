@@ -25,7 +25,7 @@
 					<select name="room_no" id="room_no"	 class="form-control">
 						<option value="" class="default_room_no">-- select room number --</option>
 						<?php foreach ($acco as $i => $v) { ?>
-							<option value="<?= $v['room_no'] ?>" class="<?= $v['bhawan'] ?> room_no"><?= $v['room_no'] ?>, (<?= $v['available'] ?>), <?= $v['bhawan'] ?></option>
+							<option value="<?= $v['room_no'] ?>" class="<?= $v['bhawan'] ?> room_no"><?= $v['room_no'] ?>, <?= $v['bhawan'] ?> #<?= $v['available'] ?></option>
 						<?php } ?>
 					</select>
 				</td>
