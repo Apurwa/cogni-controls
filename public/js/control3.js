@@ -27,7 +27,10 @@ $(document).ready(function(){
 						var room_no_text = $('#room_no option:selected').text().split('#');
 						var availability = room_no_text[1] - 1; // the text value of the option shows the availability of beds after '#'
 						//console.log(room_no_text[0]+'#'+availability);
-						$('#room_no option:selected').text(room_no_text[0]+'#'+availability);
+						if (availability != 0)
+							$('#room_no option:selected').text(room_no_text[0]+'#'+availability);
+						else
+							$('#room_no option:selected').hide();
 						$('#info').html('<div class="alert alert-success"> Room allotted: '+data.room_no+' ('+data.bhawan+')</div>');				
 						$('.default_room_no').prop('selected', true);
 						$('#row_'+id).fadeOut();
