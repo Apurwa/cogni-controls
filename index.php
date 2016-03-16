@@ -7,7 +7,10 @@ session_start();
 
 dispatch('/', 'login');
 function login(){
-  return render('login.html.php');
+  if (!isset($_SESSION['control_num']))
+    return render('login.html.php');
+  else
+    redirect_to('/manage');
 }
 
 dispatch_post('/login', 'login_post');

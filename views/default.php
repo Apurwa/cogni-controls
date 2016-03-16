@@ -12,7 +12,7 @@
 <div id="header" class="col-sm-12">
 	<h3 class="col-sm-6">Controls, Cognizance IIT Roorkee</h3>
 	<?php if (isset($_SESSION['control_num'])){ ?>
-	<h4 class="col-sm-offset-5 col-sm-1"><a href="/logout">Logout</a></h4>
+		<h4 class="col-sm-offset-5 col-sm-1"><a href="/logout">Logout</a></h4>
 	<?php } ?>
 </div>
 
@@ -21,7 +21,7 @@
 </div>
 
 <div id="footer" class="col-sm-12">
-	<h4>Source</h4>
+	<span>source</span>
 </div>
 </body>
 </html>

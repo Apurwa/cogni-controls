@@ -13,7 +13,7 @@
 			  <input type="radio" class="form-control" name="control_num" value="2" id="control2">
 			</div>
 			<div class="login-control col-sm-4">
-				<label for="control3">Control-3</label>		  
+				<label for="control3">Control-3</label>
 			  <input type="radio" class="form-control" name="control_num" value="3" id="control3">
 			</div>
 			<div class="input-group col-sm-12">
