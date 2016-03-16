@@ -20,5 +20,8 @@
 	<?php echo $content; ?>
 </div>
 
+<div id="footer" class="col-sm-12">
+	<h4>Source</h4>
+</div>
 </body>
 </html>
