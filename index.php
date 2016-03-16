@@ -103,11 +103,14 @@ function save_control1(){
   $q1 = "insert into check_ins ($check_ins_cols) values $c1_values";
   $q2 = "insert into ws_participants (receipt_id, cogni_id, ticket_id, ws_name, control1_at) values $c1_ws_values";
   //echo $q;
-  $status1 = insert_q($q1);
-  if ($status1 == 'success'){
+  if($c1_values != ''){
+    $status1 = insert_q($q1);
     if ($c1_ws_values != '')
       return insert_q($q2);
-  }
+
+  } else
+    return '[Failed] Please verify identity card of at least one participant.';
+  
   return $status1;
 }
 // on submitting the control-2

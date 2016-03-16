@@ -54,10 +54,12 @@ $(document).ready(function(){
 			if (arr[i].event_name == 'Cognizance 2016 Workshop') // check if this entry is of workshop, the string is taken from receipt table
 				is_workshop = true;
 			
-			c1_data.push({receipt_id: arr[i].id, cogni_id: arr[i].cogni_id, ticket_id: arr[i].ticket_id, noc: noc, college_id: college_id, is_acco: is_acco, is_workshop: is_workshop});
+			if (college_id)
+				c1_data.push({receipt_id: arr[i].id, cogni_id: arr[i].cogni_id, ticket_id: arr[i].ticket_id, noc: noc, college_id: college_id, is_acco: is_acco, is_workshop: is_workshop});
 		};
 		
 		c1_data_json = JSON.stringify(c1_data);
+		//console.log(c1_data_json);
 		$.post('/c1-submit', {c1_data: c1_data_json}, function(response, status){
 			$(".loading").hide();
 			if(status == 'success'){
@@ -93,8 +95,10 @@ function show_data(data, cogni_id){
 			$('.c1-details').append('<tr><td>'+arr[i].cogni_id+'</td><td>'+arr[i].mobile+'</td><td>'+arr[i].ticket_id+'</td><td>'+arr[i].type+'</td><td>'+arr[i].cost+'</td></tr>');
 			amount += parseInt(arr[i].cost);
 		}
-		if (amount != 0)
+		if (amount != 0){
 			$("#c1_submit").show();
+			$('#info').append('<br />Please verify the NOC and ID card of the participants beforing checking them in.<br />')
+		}
 		$('#info').append('[ Total Amount on receipt: <b>Rs. '+amount+'</b>. ]');
 	} catch(e){
 		$('#info').append('[ Not found. Make sure '+cogni_id+' a valid Cogni-ID. ]');
